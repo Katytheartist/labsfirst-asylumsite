@@ -82,25 +82,25 @@ function GraphWrapper(props) {
     */                       
 
 
-  try{
+  try {
     //create holders for our new data we will grab
     let fiscalData = {};
     let citizenshipData = {};
 
-    console.log('fiscal data:', fiscalData);
-    console.log('citizenship data:', citizenshipData);
+    //console.log('fiscal data ==>', fiscalData);
+    //console.log('citizenship data ==>', citizenshipData);
 
     //fetch all fiscal data if no office selected
     if (office === 'all' || !office) {
       const fiscalRes = await axios.get(`${mainUrl}/fiscalSummary`, {
-        params: { //set query params from 1st el in yrs arr to 2nd el
+        params: { // query params are set to be from 1st el in yrs arr to 2nd el
           from: years[0],
           to: years[1],
         },
       });
 
       fiscalData = fiscalRes.data; //setting fis data to have the actual data we have fetched for it
-      console.log('fiscal data for all offices:', fiscalData);
+      //console.log('all fiscal data ==>', fiscalData);
     } else { 
       //then fetch fis data for specific office
       const fiscalRes = await axios.get (`${mainUrl}/fiscalSummary`, {
@@ -112,7 +112,7 @@ function GraphWrapper(props) {
       });
 
       fiscalData = fiscalRes.data;
-      console.log(`fiscal data for ${office} :`, fiscalData);
+      console.log(`fiscal data for ${office} ==>`, fiscalData);
 
       //fetch cit data for specific off
       const citizenshipRes = await axios.get(`${mainUrl}/citizenshipSummary`, {
@@ -124,51 +124,19 @@ function GraphWrapper(props) {
       });
       //filling our previously created var with the cit data we just fetched
       citizenshipData = citizenshipRes.data;
-      console.log(`citizenship data from ${office}:`, citizenshipData);
+      console.log(`citizenship data from ${office} ==>`, citizenshipData);
     }
 
     //combine data into single obj
     const allData = { ...fiscalData, citizenshipResults: citizenshipData};
-    console.log('new data obj:', allData);
+    console.log('all data ==>', allData);
 
     //invoke the callback to set state with fetched data
     stateSettingCallback(view, office, [allData]);
   } catch (err) {
     console.error('error fetching data:', err);
   }                              
-   // check if office is set to all or null
-    // if (office === 'all' || !office) {
-    //    axios.get(
-    //     `${mainUrl}/fiscalSummary`, {
-          
-    //       params: {
-    //         from: years[0],
-    //         to: years[1],
-    //       },
-    //     })
-    //     .then(result => {
-    //       stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-    //     })
-    //     .catch(err => {
-    //       console.error(err);
-    //     });
-    // } else {
-    //   axios
-    //     .get(`${mainUrl}/citizenshipSummary`, {
-    //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-    //       params: {
-    //         from: years[0],
-    //         to: years[1],
-    //         office: office,
-    //       },
-    //     })
-    //     .then(result => {
-    //       stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-    //     })
-    //     .catch(err => {
-    //       console.error(err);
-    //     });
-    // }
+
   }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
