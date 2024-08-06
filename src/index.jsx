@@ -25,8 +25,8 @@ import { colors } from './styles/data_vis_colors';
 
 //auth0 provides the integration of user aithentication so that it is consistent and reliable
 
-import CustomAuth0Provider from '../auth/customAuth0Provider'; //the auth0 provider we have for authentication
-//import Profile here //the profile page comp
+import CustomAuth0Provider from './auth/customAuth0Provider'; //the auth0 provider we have for authentication
+import Profile from './components/pages/Profile'; //the profile page comp
 
 const { primary_accent_color } = colors;
 
@@ -36,9 +36,9 @@ ReactDOM.render( //wrap the app in the custom auth0 provider
   <Router>
     <Provider store={store}>
       <CustomAuth0Provider>
-        <React.StrictMode>
+        
           <App />
-        </React.StrictMode>
+        
       </CustomAuth0Provider>
     </Provider>
   </Router>,
@@ -62,6 +62,7 @@ export function App() {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/graphs" component={GraphsContainer} />
+        <Route path="/profile" component={Profile} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer
