@@ -33,15 +33,13 @@ const { primary_accent_color } = colors;
 const store = configureStore({ reducer: reducer });
 
 ReactDOM.render( //wrap the app in the custom auth0 provider
-  <Router>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Router>
       <CustomAuth0Provider>
-        
           <App />
-        
       </CustomAuth0Provider>
-    </Provider>
-  </Router>,
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 

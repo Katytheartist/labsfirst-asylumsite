@@ -7,11 +7,11 @@ const LoginButton = () => {
     const loginStyle = {
         cursor: 'pointer',
         border: 'none',
-        borderRadius: '10px',
+        borderRadius: '5px',
         color: 'var(--primary-color-white)',
-        backgroundColor: 'var(--primary-color-pink)',
+        backgroundColor: 'var(--primary-color-coral)',
         fontFamily: 'var(--font-acumin-pro-regular)',
-        fontSize: '20px',
+        fontSize: '16px',
         fontWeight: 'bold',
     };
 
@@ -19,7 +19,8 @@ const LoginButton = () => {
         <button
             style={loginStyle}
             onClick={()=>loginWithRedirect()}
-            
+            className='btn_login'
+            varient='primary'
         >
             Log In
         </button>
