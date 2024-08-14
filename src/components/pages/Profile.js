@@ -2,8 +2,34 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
-    const {user} = useAuth0();
-    console.log(user);
+    const {isAuthenticated, isLoading, error, user} = useAuth0();
+    
+    //Using the auth0 hook to manage authentication state
+
+    // //static user data or user_metadata
+    // const user = {
+    //     name: 'Cody Nartist',
+    //     email: 'painter1@artists.com',
+    //     bio: 'Visual artists paint a lot and get inpired by many things.',
+    //     imageUrl: 'https://picsum.photos/seed/picsum/200/300',
+    // password: 'K@rtistOG#1'
+    // };
+    console.log('user==>  ', user);
+
+
+    if(isLoading) {
+        return <div>Loading...</div>;
+    }
+    //show loading message while authentication in progress.
+
+    if(error){
+        return <div>Oops, {error.message}</div>;
+    }
+    //show the error message if authentication fails.
+
+    if(!isAuthenticated){
+        return <div>Please log in to view your profile.</div>;
+    }
 
     const imageStyle = {
         width: '100px',
@@ -29,13 +55,16 @@ const Profile = () => {
         textAlign: 'center',
     };
 
+    const profilePic = user?.user_metadata?.picture || user?.picture;
+    const bio = user?.user_metadata?.bio || 'Bio not provided.';
 
     return (
         <div style={containerStyle}>
-            <img src={user?.picture} alt="Profile" style={imageStyle}/>
+            <img src={profilePic} alt="Profile" style={imageStyle}/>
             <div style={userInfoStyle}>
                 <h2>{user?.name}</h2>
                 <p>{user?.email}</p>
+                <p>{bio}</p>
             </div>
         </div>
     );
